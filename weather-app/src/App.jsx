@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import { api } from './services/api'
-import { FaTemperatureHigh, FaWind } from 'react-icons/fa'
+import { FaLessThanEqual, FaTemperatureHigh, FaWind } from 'react-icons/fa'
 
 function App() {
   const [weather, setWeather] = useState(null)
@@ -11,30 +11,26 @@ function App() {
   async function handleGetWeather(event){
     event.preventDefault()
     const response = await api.get(search)
-    await fetch("https://goweather.herokuapp.com/weather/")
     setCity(search)
     console.log(response.data)
     setWeather(response.data)
   }
 
-  function setTempo(){
+  const setTempo = () => {
     let tempo = weather.description
     console.log(tempo)
     switch(tempo){
       case "Sunny":
-        tempo = 'Ensolarado'
-        break
+        return 'Ensolarado'
       case "Partly cloudy":
-        tempo = 'Parcialmente nublado'
-        break
+        return 'Parcialmente nublado'
       case "Clear":
-        tempo = 'Limpo'
-        break
+        return 'Limpo'
       case "Light snow":
-        tempo = 'Nevando'
-        break
+        return 'Nevando'
+      default:
+        return tempo
     }
-    return tempo
   }
 
   useEffect(() => {
@@ -42,7 +38,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="App" scroll="no">
       <div className="bodyMain">
         <header>
           <form onSubmit={handleGetWeather}>
@@ -58,16 +54,18 @@ function App() {
             <h1>{city}</h1>
           
           <section className="current-weather">
-            <h2>Clima atual</h2>
-            <p className="tempo">{weather.description}</p>
-            <p><FaTemperatureHigh /> {weather.temperature}</p>
-            <p><FaWind /> {weather.wind}</p>
+            <section className="climaAtual">
+              <h2>Clima atual</h2>                        
+                <p className="tempo">{setTempo}</p>
+                <p><FaTemperatureHigh /> {weather.temperature}</p>              
+                <p><FaWind /> {weather.wind}</p>
+            </section>
             <section className="forecast">
               <h2>Próximos dias</h2>
               <ol>
                 {
                   weather.forecast.map(day =>
-                    <li>
+                    <li key={day.toString()}>
                       <div>
                         <FaTemperatureHigh />
                         <p>{day.temperature}</p>

@@ -1,9 +1,13 @@
-.App {
+body{
   background: linear-gradient(rgb(90, 100, 133), rgb(26, 58, 160));
-  height: auto;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.App {
+  height: 100%;
   width: 100%;
   padding: 15px;
-  background-size: cover;
 }
 
 .App input, .App button {
@@ -39,12 +43,16 @@
 }
 
 .App main {
-  margin: 36px 0px;
+  margin: 15px 0px;
+}
+
+main h1{
+  margin: 30px 0px 0px 0px;
 }
 
 .App h1 {
   text-align: center;
-  margin: 36px 0px;
+  
 }
 
 .App h2 {
@@ -58,12 +66,20 @@
   justify-content: center;
   align-content: center;
   text-align: center;
-  margin: 72px 0;
+  margin: 20px 0;
 }
 
 .bodyMain{
   width: 500px;
   margin: 0 auto;
+}
+.climaAtual{
+  margin: 0;
+  padding: 0;
+}
+.current-weather{
+  margin: 0px;
+
 }
 
 .current-weather p {
@@ -84,13 +100,16 @@
   border-radius: 16px;
   margin-left: auto;
   margin-right: auto;
-  
   display: flex;
   justify-content: space-between;
 }
 
 .forecast ol li + li {
   margin-top: 8px;
+}
+
+.forecast ol li div p{
+  font-size: 17px;
 }
 
 .forecast ol li h3 {
