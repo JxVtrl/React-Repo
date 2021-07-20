@@ -6,8 +6,11 @@ const Tarefas = ({tarefas, handleTarefaClick, handleTarefaDelete}) => {
     return (
         <>
             {tarefas.map(tarefa => 
-                <Tarefa tarefa={tarefa} handleTarefaClick={handleTarefaClick}
-                handleTarefaDelete={handleTarefaDelete}
+                <Tarefa 
+                    key={tarefa.id}
+                    tarefa={tarefa} 
+                    handleTarefaClick={handleTarefaClick}
+                    handleTarefaDelete={handleTarefaDelete}
                 />
             )}
         </>
