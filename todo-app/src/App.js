@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 import {v4 as uuidv4} from 'uuid'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Header from './components/Header/Header'
 import Tarefas from './components/Tarefas'
 import AddTarefa from './components/AddTarefa/AddTarefa'
+import TarefaDetails from './components/TarefaDetails/TarefaDetails'
 
 import './app.css'
 
@@ -19,8 +22,17 @@ const App = () =>{
       title: 'Ler Livros',
       feito: true
     }
-    
   ])
+
+  useEffect(() => {
+    const fetchTarefas = async () => {
+      const {data} = await axios.get(
+      'https://jsonplaceholder.cypress.io/todos?_limit=10'
+      )
+      setTarefas(data)
+    }
+    fetchTarefas()
+  }, [])
 
   const handleTarefaClick = (tarefaId) => {
     const newTarefa =  tarefas.map((tarefa) => {
@@ -53,19 +65,31 @@ const App = () =>{
 
 
   return (
-    <>
-      
+    <Router>
       <div className="container">
         <Header />
-        <AddTarefa 
-          handleTarefaAddition={handleTarefaAddition}
-        /><Tarefas 
-          tarefas={tarefas} 
-          handleTarefaClick={handleTarefaClick} 
-          handleTarefaDelete={handleTarefaDelete}
+        <Route 
+          path="/" 
+          exact 
+          render={() => (
+            <>
+              <AddTarefa 
+                handleTarefaAddition={handleTarefaAddition}
+              />
+              <Tarefas 
+                tarefas={tarefas} 
+                handleTarefaClick={handleTarefaClick} 
+                handleTarefaDelete={handleTarefaDelete}
+              />
+            </>
+        )}/>
+        <Route 
+          path="/:tarefaTitle"
+          exact
+          component={TarefaDetails}
         />
       </div>
-    </>
+ </Router>
   );
 }
 
